@@ -8,6 +8,7 @@
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#2196f3" />
     <link rel="apple-touch-icon" href="icons/icon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
   </head>
   <body>
     <div class="app">
@@ -15,7 +16,14 @@
         <h1>PWA App Name</h1>
       </header>
       <main>
-       <p>Hey, hoping you're doing well!</p>
+        <div class="scanner-container">
+          <div id="interactive" class="viewport"></div>
+          <button id="start-scanner">Start Scanner</button>
+        </div>
+        <div id="result">
+          <h3>Scanned Item Details:</h3>
+          <div id="item-details"></div>
+        </div>
       </main>
     </div>
     <script src="app.js"></script>
