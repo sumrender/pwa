@@ -1,4 +1,4 @@
-// Main application logic can go here
+const BASE_URL = 'https://upc.up.railway.app';
 console.log('App is running'); 
 
 const startScannerButton = document.getElementById('start-scanner');
@@ -62,7 +62,10 @@ function startScanner() {
             type: "LiveStream",
             target: document.querySelector("#interactive"),
             constraints: {
-                facingMode: "environment"
+                facingMode: "environment",
+                width: 640,
+                height: 300,
+                aspectRatio: { min: 1, max: 2 }
             },
         },
         decoder: {
@@ -78,8 +81,6 @@ function startScanner() {
 
     Quagga.onDetected(function(result) {
         const code = result.codeResult.code;
-        console.log(result);
-        // Stop scanner after detecting code
         Quagga.stop();
         startScannerButton.textContent = 'Start Scanner';
         isScanning = false;
@@ -89,12 +90,13 @@ function startScanner() {
 }
 
 async function lookupProduct(barcode) {
+    console.log('Looking up product:', barcode);
     try {
         if (!isOnline) {
             throw new Error('No internet connection');
         }
 
-        const response = await fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${barcode}`);
+        const response = await fetch(`${BASE_URL}?upc=${barcode}`);
         const data = await response.json();
         
         if (data.items && data.items.length > 0) {
